@@ -8,9 +8,12 @@ import { MapContainer, TileLayer, Marker, useMap } from "react-leaflet";
 import L from "leaflet";
 import { getReverseGeocode } from "@/utils/geocode/index";
 import { getNewsByQuery } from "@/utils/news";
+import { useModal } from "@/stores/modals";
 
 const Map = () => {
   const map = useMap();
+
+  const eventModal = useModal((state) => state.eventModal);
 
   const handleOnClick = useCallback(async (event: L.LeafletMouseEvent) => {
     const lat = event.latlng.lat;
@@ -24,6 +27,11 @@ const Map = () => {
     console.log(address);
 
     if (!address) return;
+
+    eventModal.setData({
+      lat,
+      lng,
+    });
 
     const news = await getNewsByQuery("incendios " + address);
     console.log(news);

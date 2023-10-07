@@ -1,3 +1,4 @@
+import Modals from "@/components/modals";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -20,6 +21,7 @@ export default function RootLayout({
         className={`flex-1 flex bg-gray-100 text-gray-400 ${inter.className}`}
       >
         {children}
+        <Modals />
       </body>
     </html>
   );
