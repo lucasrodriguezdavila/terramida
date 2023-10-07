@@ -9,11 +9,17 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@types/leaflet": "^1.9.6",
     "firebase": "^10.4.0",
     "firebase-admin": "^11.11.0",
+    "leaflet": "^1.9.4",
+    "leaflet-defaulticon-compatibility": "^0.1.2",
     "next": "13.5.4",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "react-geocode": "^1.0.0-alpha.1",
+    "react-leaflet": "^4.2.1",
+    "xml-js": "^1.6.11"
   },
   "devDependencies": {
     "@types/node": "^20",
