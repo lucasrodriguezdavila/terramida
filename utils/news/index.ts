@@ -1,6 +1,3 @@
-//https://news.google.com/rss/search?q=incendios+cordoba
-import convert from "xml-js";
-
 interface New {
   title: {
     _text: string;
