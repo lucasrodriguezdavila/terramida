@@ -1,8 +1,9 @@
 interface Organization {
   id: string;
-  goverment: boolean;
+  government: boolean;
   lat: number;
   lng: number;
   name: string;
   description: string;
+  image: string;
 }

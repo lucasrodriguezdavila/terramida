@@ -12,5 +12,5 @@ export const getOrganizationById = async (id: string | undefined) => {
     return null;
   }
 
-  return organization.data();
+  return organization.data() as Organization;
 };
