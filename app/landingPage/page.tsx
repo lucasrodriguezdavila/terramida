@@ -23,7 +23,7 @@ const items=[
 export default function landingPage() {
   return (
     <>
-      <header style={{ backgroundImage: "url('./fondo1.png')" }}>
+      <header className='background-container bg-cover bg-center bg-no-repeat' style={{ backgroundImage: "url('./fondo1.png')" }}>
       <div className="text-center flex flex-col items-center	 h-screen gap-6 p-40"
        style={{backdropFilter:' blur(3px)'}}>
         <h1 className=" text-3xl font-extrabold tracking-[-0.04em] text-black sm:text-5xl sm:leading-[3.5rem]">¿Tenés fuego?</h1>
