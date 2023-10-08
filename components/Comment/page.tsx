@@ -1,8 +1,7 @@
-
-import { getCommentById } from '@/utils/comments'
-import { useAddressFromLatLng } from '@/utils/geocode'
-import React from 'react'
-import { Address } from './Address'
+import { getCommentById } from "@/utils/comments";
+import { useAddressFromLatLng } from "@/utils/geocode";
+import React from "react";
+import { Address } from "./Address";
 
 export default async function Comment({ id }: { id: string }) {
   /*
@@ -19,25 +18,20 @@ export default async function Comment({ id }: { id: string }) {
   */
 
   //const address=useAddressFromLatLng(-34.9220967, -57.9543474)
-  
+
   return (
     <div className="mb-6">
       <div className="flex justify-between">
-        <span className="text-gray-600 font-bold">Comentario</span>
+        <span className="text-gray-600 font-bold">Comment</span>
         <p>
           <span className="text-blue-300 mr-2">Lun 8 Sep 2023</span>
           <span className="text-gray-300 mr-2"> | </span>
           <span className="text-blue-300">
-            <Address
-              lat={-34.9220967}
-              lng={-57.9543474}
-            />
+            <Address lat={-34.9220967} lng={-57.9543474} />
           </span>
         </p>
       </div>
-      <p className="mt-2">
-        {id}
-      </p>
+      <p className="mt-2">{id}</p>
     </div>
-  )
+  );
 }

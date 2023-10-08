@@ -10,8 +10,9 @@ export async function generateMetadata({
   params: { id: string | undefined };
 }): Promise<Metadata> {
   try {
+    const organization = await getOrganizationById(params.id);
     return {
-      title: `${params.id} | Terramida`,
+      title: `${organization?.name} | Terramida`,
     };
   } catch (error) {
     notFound();
@@ -55,7 +56,7 @@ export default async function Organizacion({
                     href="#"
                     className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
                   >
-                    Contactar
+                    Contact
                   </a>
                 </div>
               </div>
@@ -65,15 +66,15 @@ export default async function Organizacion({
               <div className="flex flex-col">
                 <ul>
                   {organization.government ? (
-                    <li className="mb-2">Gubernamental</li>
+                    <li className="mb-2">Goverment organization</li>
                   ) : (
-                    <li className="mb-2">Organización</li>
+                    <li className="mb-2">Independent organization</li>
                   )}
                 </ul>
               </div>
               <hr className="my-6 border-t border-gray-300" />
               <h3 className="font-semibold text-center mt-3 -mb-2">
-                Encuentra esta organización en
+                Find this organization on
               </h3>
               <div className="flex justify-center items-center gap-6 my-6">
                 <a
@@ -166,47 +167,18 @@ export default async function Organizacion({
           </div>
           <div className="col-span-12 md:col-span-8">
             <div className="bg-white shadow rounded-lg p-6">
-              <h2 className="text-xl font-bold  mb-4">Actividad</h2>
+              <h2 className="text-xl font-bold  mb-4">Activity</h2>
               <div className="mb-6">
                 <div className="flex justify-between">
-                  <span className="text-gray-600 font-bold">Comentario</span>
+                  <span className="text-gray-600 font-bold">Comment</span>
                   <p>
                     <span className="text-gray-600 mr-2">Campana</span>
                     <span className="text-gray-600">23-07-2023</span>
                   </p>
                 </div>
                 <p className="mt-2">
-                  El incendio se origino por una quema de basura en el vertedero
-                  de la comunidad, ya esta controlado por los bomberos del
-                  cuartel n°77.
-                </p>
-              </div>
-              <div className="mb-6">
-                <div className="flex justify-between">
-                  <span className="text-gray-600 font-bold">Comentario</span>
-                  <p>
-                    <span className="text-gray-600 mr-2">Campana</span>
-                    <span className="text-gray-600">23-07-2023</span>
-                  </p>
-                </div>
-                <p className="mt-2">
-                  El incendio se origino por una quema de basura en el vertedero
-                  de la comunidad, ya esta controlado por los bomberos del
-                  cuartel n°77.
-                </p>
-              </div>
-              <div className="mb-6">
-                <div className="flex justify-between">
-                  <span className="text-gray-600 font-bold">Comentario</span>
-                  <p>
-                    <span className="text-gray-600 mr-2">Campana</span>
-                    <span className="text-gray-600">23-07-2023</span>
-                  </p>
-                </div>
-                <p className="mt-2">
-                  El incendio se origino por una quema de basura en el vertedero
-                  de la comunidad, ya esta controlado por los bomberos del
-                  cuartel n°77.
+                  The fire is still active, but we are working on it. We have
+                  already managed to control 60% of the fire.
                 </p>
               </div>
             </div>
