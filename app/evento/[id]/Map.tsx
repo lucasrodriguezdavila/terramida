@@ -68,7 +68,7 @@ const Map: React.FC<Props> = ({ lat, lng }) => {
   return <></>;
 };
 
-export const MinMap: React.FC<Props> = ({ lat, lng }) => {
+export default function MinMap({ lat, lng }: Props) {
   return (
     <div className="w-full h-full flex flex-1">
       <MapContainer
@@ -81,4 +81,4 @@ export const MinMap: React.FC<Props> = ({ lat, lng }) => {
       </MapContainer>
     </div>
   );
-};
+}

@@ -1,7 +1,7 @@
 import { getOrganizationById } from "@/utils/organizations";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import MapDefault from "./Map";
+import dynamic from "next/dynamic";
 
 export async function generateMetadata({
   params,
@@ -16,6 +16,10 @@ export async function generateMetadata({
     notFound();
   }
 }
+const MapDefault = dynamic(() => import("./Map"), {
+  loading: () => <p>loading...</p>,
+  ssr: false,
+});
 
 export default async function Organizacion({
   params: { id },

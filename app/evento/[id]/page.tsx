@@ -3,8 +3,8 @@ import { getAdressFromLatLng, getReverseGeocode } from "@/utils/geocode";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Address } from "./Address";
-import { MinMap } from "./Map";
 import Activity from "./Activity";
+import dynamic from "next/dynamic";
 
 export async function generateMetadata({
   params,
@@ -19,6 +19,11 @@ export async function generateMetadata({
     notFound();
   }
 }
+
+const Map = dynamic(() => import("./Map"), {
+  loading: () => <p>loading...</p>,
+  ssr: false,
+});
 
 export default async function Organizacion({
   params: { id },
@@ -45,7 +50,7 @@ export default async function Organizacion({
                   lng={event.initialLongitude}
                 />
                 <div className="mt-6 flex flex-wrap gap-4 justify-center aspect-square w-full">
-                  <MinMap
+                  <Map
                     lat={event.initialLatitude}
                     lng={event.initialLongitude}
                   />

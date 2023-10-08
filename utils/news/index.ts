@@ -30,12 +30,9 @@ export interface New {
 export const getNewsByQuery = async (query: string | undefined) => {
   if (!query) return [];
 
-  const response = await fetch(
-    `${window.location.origin}/api/news?query=${query}`,
-    {
-      mode: "no-cors",
-    }
-  );
+  const response = await fetch(`/api/news?query=${query}`, {
+    mode: "no-cors",
+  });
   const json = await response.json();
   if (!json?.news?.length) return [];
 

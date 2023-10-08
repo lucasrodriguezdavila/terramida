@@ -19,7 +19,7 @@ const Activity: React.FC<Props> = ({}) => {
   const handleOnClickComment = useCallback(() => {
     // put commentRef in focus and scroll to the bottom of the page
     commentRef.current?.focus();
-    window.scrollTo(0, document.body.scrollHeight);
+    window?.scrollTo(0, document.body.scrollHeight);
   }, []);
 
   const handleOnSubmitComment = useCallback(

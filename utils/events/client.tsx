@@ -4,9 +4,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 const getEventCommentsByEventId = async (eventId: string | undefined) => {
   if (!eventId) throw Error("Event ID is required");
 
-  const response = await fetch(
-    `${window.location.origin}/api/event/${eventId}/comments`
-  );
+  const response = await fetch(`/api/event/${eventId}/comments`);
 
   if (!response.ok) throw Error("Error fetching comments");
 
