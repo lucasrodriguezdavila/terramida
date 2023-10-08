@@ -10,10 +10,13 @@ import {
   useDisconnect,
   useSignInWithGoogle,
   useUserData,
+  useUserOrganization,
 } from "@/utils/auth";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { usePostEvent } from "@/utils/terramida";
+import { useOrganization } from "@/utils/organizations/client";
+import { Menu } from "@headlessui/react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,13 +28,15 @@ const PrivateController = ({ children }: { children: React.ReactNode }) => {
   const { data: authUser, isFetching: isFetchingAuthUser } = useAuthUser();
   const { mutate: login } = useSignInWithGoogle();
 
+  const { data: myOrganization } = useUserOrganization(authUser?.uid);
+
   const handleLogout = React.useCallback(() => {
     disconnect();
   }, [disconnect]);
 
   return (
     <>
-      <div className="relative h-16 -z-10 bg-slate-100 shadow-2xl border-b-[1px] border-gray-400 p-5 items-center flex">
+      <div className="relative h-16 z-0 bg-slate-100 shadow-xl border-b-[1px] border-gray-400 p-5 items-center flex">
         <nav className="hidden md:flex ml-auto gap-4">
           <Link
             href="/mapa"
@@ -40,6 +45,26 @@ const PrivateController = ({ children }: { children: React.ReactNode }) => {
           >
             Mapa
           </Link>
+
+          {authUser ? (
+            <Link
+              href={`/usuario/${authUser.uid}`}
+              passHref
+              className="py-2 font-bold text-gray-500 cursor-pointer"
+            >
+              Mi Perfil
+            </Link>
+          ) : null}
+
+          {myOrganization ? (
+            <Link
+              href={`/organizacion/${myOrganization.id}`}
+              passHref
+              className="py-2 font-bold text-gray-500 cursor-pointer"
+            >
+              Mi organizacion
+            </Link>
+          ) : null}
 
           {authUser ? (
             <div
@@ -57,28 +82,66 @@ const PrivateController = ({ children }: { children: React.ReactNode }) => {
             </div>
           )}
         </nav>
-        <div
-          className="ml-auto w-7 grid gap-2 cursor-pointer md:hidden"
-          onClick={() => setMenuOpen(!menuOpen)}
-        >
-          <div className=" w-full h-[3px] bg-gray-900" />
-          <div className=" w-full h-[3px] bg-gray-900" />
-          <div className=" w-full h-[3px] bg-gray-900" />
-        </div>
-        {menuOpen && (
-          <ul className="fixed right-0 top-16 bg-slate-800 p-4 rounded-bl-md border-l-[0.2px] border-b-[0.2px] border-slate-700 z-50 md:hidden">
-            <Link href="/mapa" passHref>
-              <li className="py-2 font-bold text-white cursor-pointer">Mapa</li>
-            </Link>
-
-            <li
-              className="py-2 font-bold text-white cursor-pointer"
-              onClick={handleLogout}
+        <Menu>
+          <Menu.Button className="ml-auto md:hidden">
+            <div
+              className="w-7 grid gap-2 cursor-pointer "
+              onClick={() => setMenuOpen(!menuOpen)}
             >
-              Cerrar sesion
-            </li>
-          </ul>
-        )}
+              <div className=" w-full h-[3px] bg-gray-700" />
+              <div className=" w-full h-[3px] bg-gray-700" />
+              <div className=" w-full h-[3px] bg-gray-700" />
+            </div>
+          </Menu.Button>
+          <Menu.Items className="list-none flex flex-col gap-4  absolute right-0 top-16 bg-slate-200 border border-slate-300 px-3 py-4 bottom-0 rounded-bl-lg h-fit text-right text-slate-600 pb-6 pl-4">
+            <Menu.Item>
+              {({ active }) => (
+                <Link href="/mapa" passHref>
+                  <li className=" font-bold  cursor-pointer">Mapa</li>
+                </Link>
+              )}
+            </Menu.Item>
+
+            {authUser ? (
+              <Menu.Item>
+                {({ active }) => (
+                  <Link
+                    href={`/usuario/${authUser.uid}`}
+                    passHref
+                    className=" font-bold  cursor-pointer"
+                  >
+                    Mi Perfil
+                  </Link>
+                )}
+              </Menu.Item>
+            ) : (
+              <Menu.Item>
+                {({ active }) => (
+                  <li
+                    className=" font-bold  cursor-pointer"
+                    onClick={() => login()}
+                  >
+                    Iniciar sesion
+                  </li>
+                )}
+              </Menu.Item>
+            )}
+
+            {myOrganization ? (
+              <Menu.Item>
+                {({ active }) => (
+                  <Link
+                    href={`/organizacion/${myOrganization.id}`}
+                    passHref
+                    className=" font-bold  cursor-pointer"
+                  >
+                    Mi organizacion
+                  </Link>
+                )}
+              </Menu.Item>
+            ) : null}
+          </Menu.Items>
+        </Menu>
       </div>
 
       {children}

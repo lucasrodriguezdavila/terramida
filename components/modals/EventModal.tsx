@@ -123,6 +123,11 @@ const EventModal = () => {
         lng: data.lng,
         radius: 1,
       });
+      postThermalEvent({
+        lat: data.lat,
+        lng: data.lng,
+        radius: 1,
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);

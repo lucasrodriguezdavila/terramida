@@ -29,7 +29,7 @@ export default async function Mapa({
   searchParams?: { [key: string]: string | string[] | undefined };
 }) {
   return (
-    <div className=" flex-1">
+    <div className=" flex-1 -z-10">
       <Map />
     </div>
   );

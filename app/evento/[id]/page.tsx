@@ -34,7 +34,7 @@ export default async function Organizacion({
   }
 
   return (
-    <div className="z-100 text-gray-400 w-full">
+    <div className="-z-10 text-gray-400 w-full">
       <div className="container mx-auto py-8">
         <div className="grid z-100  grid-cols-12 gap-6 px-4">
           <div className="col-span-12 md:col-span-4 ">
