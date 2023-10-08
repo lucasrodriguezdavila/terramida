@@ -17,6 +17,7 @@
     "dayjs": "^1.11.10",
     "firebase": "^10.4.0",
     "firebase-admin": "^11.11.0",
+    "fs": "^0.0.1-security",
     "leaflet": "^1.9.4",
     "leaflet-defaulticon-compatibility": "^0.1.2",
     "next": "13.5.4",

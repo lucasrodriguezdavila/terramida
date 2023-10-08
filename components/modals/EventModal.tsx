@@ -9,12 +9,37 @@ import { Disclosure } from "@headlessui/react";
 
 import dayjs from "dayjs";
 import { ChevronRightIcon } from "@heroicons/react/20/solid";
-import { usePostEvent, useThermalAnomalies } from "@/utils/terramida";
+import {
+  useGetEventsInArea,
+  usePostEvent,
+  useThermalAnomalies,
+} from "@/utils/terramida";
 import { useAuthUser, useSignInWithGoogle } from "@/utils/auth";
 import { useRouter } from "next/navigation";
 
-const relativeTime = require("dayjs/plugin/relativeTime");
-dayjs.extend(relativeTime);
+function _getDistanceFromLatLonInKm(
+  lat1: any,
+  lon1: any,
+  lat2: any,
+  lon2: any
+) {
+  var R = 6371; // Radius of the earth in kilometers
+  var dLat = deg2rad(lat2 - lat1); // deg2rad below
+  var dLon = deg2rad(lon2 - lon1);
+  var a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(deg2rad(lat1)) *
+      Math.cos(deg2rad(lat2)) *
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2);
+  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  var d = R * c; // Distance in KM
+  return d;
+}
+
+function deg2rad(deg: any) {
+  return deg * (Math.PI / 180);
+}
 
 interface NewItemProps {
   newItem: New;
@@ -85,9 +110,15 @@ const EventModal = () => {
     isLoading: thermalAnomaliesLoading,
   } = useThermalAnomalies();
 
+  const {
+    mutate: getEventsInArea,
+    data: eventsInArea,
+    isLoading: eventsInAreaLoading,
+  } = useGetEventsInArea();
+
   useEffect(() => {
     if (data) {
-      postThermalEvent({
+      getEventsInArea({
         lat: data.lat,
         lng: data.lng,
         radius: 1,
@@ -187,12 +218,11 @@ const EventModal = () => {
             </>
           )}
           <hr className="border-gray-300 w-full -mt-2" />
-          {!thermalAnomaliesLoading && (
+          {!thermalAnomaliesLoading && !eventsInAreaLoading ? (
             <>
-              {!thermalAnomalies?.length ? (
+              {!thermalAnomalies?.length && !eventsInArea?.length ? (
                 <p className="text-red-400 text-center">
-                  No detectamos anomalías térmicas en el área, estas seguro que
-                  deseas reportar?
+                  No detectamos anomalías térmicas en el área.
                 </p>
               ) : null}
               {thermalAnomalies?.length ? (
@@ -202,38 +232,61 @@ const EventModal = () => {
                 </p>
               ) : null}
 
-              <div className="w-full gap-4 flex">
-                {authUser ? (
-                  <>
-                    <button
-                      className="bg-red-400 w-full text-white rounded-md py-2 px-4 mt-2"
-                      onClick={() => {
-                        setData(null);
-                      }}
-                    >
-                      Cancelar
-                    </button>
+              {eventsInArea?.length ? (
+                <div className="w-full gap-1 flex">
+                  {eventsInArea?.map((event: any) => {
+                    return (
+                      <Link
+                        href={`/evento/${event.id}`}
+                        key={event.id}
+                        className="bg-blue-400 w-full text-white rounded-md py-2 px-4 mt-2"
+                      >
+                        Ver evento a{" "}
+                        {_getDistanceFromLatLonInKm(
+                          data?.lat,
+                          data?.lng,
+                          event.initialLatitude,
+                          event.initialLongitude
+                        )?.toFixed(3)}{" "}
+                        metros
+                      </Link>
+                    );
+                  })}
+                </div>
+              ) : (
+                <div className="w-full gap-4 flex">
+                  {authUser ? (
+                    <>
+                      <button
+                        className="bg-red-400 w-full text-white rounded-md py-2 px-4 mt-2"
+                        onClick={() => {
+                          setData(null);
+                        }}
+                      >
+                        Cancelar
+                      </button>
+                      <button
+                        className="bg-blue-400 w-full text-white rounded-md py-2 px-4 mt-2"
+                        onClick={handlePostEvent}
+                        disabled={isPostingEventLoading}
+                      >
+                        {isPostingEventLoading ? "Reportando..." : "Reportar"}
+                      </button>
+                    </>
+                  ) : (
                     <button
                       className="bg-blue-400 w-full text-white rounded-md py-2 px-4 mt-2"
-                      onClick={handlePostEvent}
-                      disabled={isPostingEventLoading}
+                      onClick={() => {
+                        login();
+                      }}
                     >
-                      {isPostingEventLoading ? "Reportando..." : "Reportar"}
+                      Iniciar sesion para reportar
                     </button>
-                  </>
-                ) : (
-                  <button
-                    className="bg-blue-400 w-full text-white rounded-md py-2 px-4 mt-2"
-                    onClick={() => {
-                      login();
-                    }}
-                  >
-                    Iniciar sesion para reportar
-                  </button>
-                )}
-              </div>
+                  )}
+                </div>
+              )}
             </>
-          )}
+          ) : null}
         </>
       )}
     </ModalTemplate>

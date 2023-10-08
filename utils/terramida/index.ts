@@ -1,7 +1,6 @@
 // POST /thermalAnomalies expects a JSON with lat, lng and radius
 
 import { useMutation } from "@tanstack/react-query";
-import { useAuthUser } from "../auth";
 import { auth } from "@/app/firebase";
 
 const BASE_URL = "https://griffith-koala-gdzd.2.us-1.fl0.io";
@@ -72,6 +71,34 @@ export const usePostEvent = () => {
       const token = await auth.currentUser?.getIdToken();
       if (!token) throw new Error("No token provided");
       return postEvent(data, token);
+    },
+  });
+};
+
+// get events in area
+const getEventsInArea = async (data: ThermalAnomalyPost, token: string) => {
+  const res = await fetch(`${BASE_URL}/eventsInArea`, {
+    method: "POST",
+    headers: {
+      Authorization: "Bearer " + token,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      latitude: data.lat,
+      longitude: data.lng,
+    }),
+  });
+
+  const json = await res.json();
+  return json;
+};
+
+export const useGetEventsInArea = () => {
+  return useMutation({
+    mutationFn: async (data: ThermalAnomalyPost) => {
+      const token = await auth.currentUser?.getIdToken();
+      if (!token) throw new Error("No token provided");
+      return getEventsInArea(data, token);
     },
   });
 };
