@@ -233,11 +233,12 @@ const EventModal = () => {
               ) : null}
 
               {eventsInArea?.length ? (
-                <div className="w-full gap-1 flex">
+                <div className="w-full gap-1 flex flex-col">
                   {eventsInArea?.map((event: any) => {
                     return (
                       <Link
                         href={`/evento/${event.id}`}
+                        onClick={handleCloseModal}
                         key={event.id}
                         className="bg-blue-400 w-full text-white rounded-md py-2 px-4 mt-2"
                       >
@@ -248,7 +249,7 @@ const EventModal = () => {
                           event.initialLatitude,
                           event.initialLongitude
                         )?.toFixed(3)}{" "}
-                        metros
+                        kms
                       </Link>
                     );
                   })}
