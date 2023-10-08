@@ -34,7 +34,7 @@ export default function ModalTemplate({
               leaveFrom="opacity-50"
               leaveTo="opacity-0"
             >
-              <Dialog.Panel className="flex  w-[80vw] mx-auto flex-col items-center justify-start gap-4 rounded-2xl bg-slate-100 p-4">
+              <Dialog.Panel className="flex  w-[80vw] md:w-[60vw] lg:w-[40vw] mx-auto flex-col items-center justify-start gap-4 rounded-2xl bg-slate-100 p-4">
                 {children}
               </Dialog.Panel>
             </Transition.Child>

@@ -10,27 +10,17 @@ import { getReverseGeocode } from "@/utils/geocode/index";
 import { getNewsByQuery } from "@/utils/news";
 import { useModal } from "@/stores/modals";
 
-const Map = () => {
+interface Props {
+  lat: number;
+  lng: number;
+}
+
+const Map: React.FC<Props> = ({ lat, lng }) => {
   const map = useMap();
-
-  const eventModal = useModal((state) => state.eventModal);
-
-  const handleOnClick = useCallback(
-    async (event: L.LeafletMouseEvent) => {
-      const lat = event.latlng.lat;
-      const lng = event.latlng.lng;
-
-      eventModal.setData({
-        lat,
-        lng,
-      });
-    },
-    [eventModal]
-  );
 
   useEffect(() => {
     map.setZoom(12);
-    map.setView([-31.421631960419607, -64.18899536132814]);
+    map.setView([lat, lng]);
 
     L.tileLayer
       .wms("https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?", {
@@ -73,26 +63,22 @@ const Map = () => {
         }
       )
       .addTo(map);
-  }, [map]);
-
-  useEffect(() => {
-    map.addEventListener("click", handleOnClick);
-
-    return () => {
-      map.removeEventListener("click");
-    };
-  }, [map, handleOnClick]);
+  }, [map, lat, lng]);
 
   return <></>;
 };
 
-export default function MapDefault() {
+export const MinMap: React.FC<Props> = ({ lat, lng }) => {
   return (
     <div className="w-full h-full flex flex-1">
-      <MapContainer zoom={12} style={{ height: "100%", width: "100%" }}>
+      <MapContainer
+        zoom={12}
+        style={{ height: "100%", width: "100%" }}
+        dragging={false}
+      >
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-        <Map />
+        <Map lat={lat} lng={lng} />
       </MapContainer>
     </div>
   );
-}
+};

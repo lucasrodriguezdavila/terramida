@@ -9,7 +9,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   try {
     return {
-      title: `${params.id} | Terramida`,
+      title: `Mapa | Terramida`,
     };
   } catch (error) {
     notFound();
@@ -29,7 +29,7 @@ export default async function Mapa({
   searchParams?: { [key: string]: string | string[] | undefined };
 }) {
   return (
-    <div className=" w-full">
+    <div className=" flex-1">
       <Map />
     </div>
   );

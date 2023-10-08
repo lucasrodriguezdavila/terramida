@@ -57,7 +57,7 @@ interface CoordinatedGeocodedResult {
     };
   };
   place_id: string;
-  plus_code: {
+  plus_code?: {
     compound_code: string;
     global_code: string;
   };
@@ -96,6 +96,10 @@ export const getReverseGeocode = async (
   }
 };
 
+const stringHasNumber = (string: string) => {
+  return /\d/.test(string);
+};
+
 export const getAdressFromLatLng = async (
   lat: number | undefined,
   lng: number | undefined
@@ -105,10 +109,30 @@ export const getAdressFromLatLng = async (
 
     const geocode = await getReverseGeocode(lat, lng);
     // get address by splitting addres in the first space
-    const results = geocode?.plus_code.compound_code.split(" ");
-    const address = results?.slice(1).join(" ");
 
-    if (!address) throw new Error("No address found");
+    if (!geocode?.plus_code.compound_code) {
+      // find the first result where formatted_address has something after the first space
+      let address: string = "";
+      geocode?.results.map((result) => {
+        if (address) return;
+
+        const results = result?.formatted_address?.split(" ");
+
+        if (results.length === 1 && stringHasNumber(results[0])) return false;
+
+        if (stringHasNumber(results[0])) address = results?.slice(1).join(" ");
+
+        if (!stringHasNumber(results[0])) address = results?.slice(0).join(" ");
+      });
+
+      if (!address) throw new Error("No address found");
+
+      return address;
+    }
+    const results = geocode?.plus_code.compound_code?.split(" ");
+
+    let address: string = "";
+    if (stringHasNumber(results[0])) address = results?.slice(1).join(" ");
 
     return address;
   } catch (error) {

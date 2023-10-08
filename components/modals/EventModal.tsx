@@ -1,6 +1,6 @@
 "use client";
 import { useModal } from "@/stores/modals";
-import React, { Fragment, useCallback, useMemo } from "react";
+import React, { Fragment, useCallback, useEffect, useMemo } from "react";
 import ModalTemplate from "./ModalTemplate";
 import { useAddressFromLatLng, useReverseGeocode } from "@/utils/geocode";
 import { New, useNews } from "@/utils/news";
@@ -9,6 +9,9 @@ import { Disclosure } from "@headlessui/react";
 
 import dayjs from "dayjs";
 import { ChevronRightIcon } from "@heroicons/react/20/solid";
+import { usePostEvent, useThermalAnomalies } from "@/utils/terramida";
+import { useAuthUser, useSignInWithGoogle } from "@/utils/auth";
+import { useRouter } from "next/navigation";
 
 const relativeTime = require("dayjs/plugin/relativeTime");
 dayjs.extend(relativeTime);
@@ -57,55 +60,182 @@ const NewItem: React.FC<NewItemProps> = ({ newItem }) => {
 };
 
 const EventModal = () => {
+  const router = useRouter();
+
   const data = useModal((state) => state.eventModal.data);
   const setData = useModal((state) => state.eventModal.setData!);
 
   const { data: addresGeocoded } = useAddressFromLatLng(data?.lat, data?.lng);
+  const { data: authUser, isFetching: isFetchingAuthUser } = useAuthUser();
+
+  const { mutate: login } = useSignInWithGoogle();
+  const {
+    mutate: postEvent,
+    isSuccess,
+    data: postedEventData,
+    isLoading: isPostingEventLoading,
+    reset: resetPostEvent,
+  } = usePostEvent();
 
   const { data: news } = useNews(addresGeocoded);
+
+  const {
+    mutate: postThermalEvent,
+    data: thermalAnomalies,
+    isLoading: thermalAnomaliesLoading,
+  } = useThermalAnomalies();
+
+  useEffect(() => {
+    if (data) {
+      postThermalEvent({
+        lat: data.lat,
+        lng: data.lng,
+        radius: 1,
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data]);
 
   const handleCloseModal = useCallback(() => {
     setData(null);
   }, [setData]);
 
+  const handlePostEvent = React.useCallback(() => {
+    if (!data) return;
+    postEvent({
+      lat: data?.lat,
+      lng: data?.lng,
+      radius: 2,
+    });
+  }, [postEvent, data]);
+
+  const handleNavigateToEvent = React.useCallback(() => {
+    if (!postedEventData?.id) return;
+
+    router.push(`/evento/${postedEventData?.id}`);
+    handleCloseModal();
+    resetPostEvent();
+  }, [postedEventData?.id, router, handleCloseModal, resetPostEvent]);
+
   return (
     <ModalTemplate closeModal={handleCloseModal} isOpen={!!data}>
-      <h1 className="font-extrabold text-2xl text-gray-500 self-start items-center gap-1">
+      <h1 className="font-extrabold text-2xl text-gray-600 self-start items-center gap-1">
         {addresGeocoded}
-        <p className="text-xs text-gray-400 font-normal">
+        <p className="text-xs text-gray-400 font-normal mt-1">
           {data?.lat} - {data?.lng}
         </p>
       </h1>
-      <hr className="border-gray-300 w-full -mb-2" />
+      {isSuccess ? (
+        <>
+          <p className="text-center text-2xl text-gray-600 my-6">
+            Evento reportado con exito!
+          </p>
+          <div className="w-full gap-4 flex">
+            {postedEventData?.id ? (
+              <button
+                className="bg-blue-400 w-full text-white rounded-md py-2 px-4 mt-2"
+                onClick={handleNavigateToEvent}
+              >
+                Ver evento
+              </button>
+            ) : (
+              <button
+                className="bg-blue-400 w-full text-white rounded-md py-2 px-4 mt-2"
+                onClick={handleNavigateToEvent}
+              >
+                Cerrar
+              </button>
+            )}
+          </div>
+        </>
+      ) : (
+        <>
+          {news?.length && (
+            <>
+              <hr className="border-gray-300 w-full -mb-2" />
 
-      <div className="flex flex-col justify-start w-full">
-        <Disclosure>
-          {({ open }) => {
-            return (
-              <>
-                <Disclosure.Button className="py-2 text-left w-full flex gap-2 items-center text-gray-600">
-                  Noticias relacionadas
-                  <ChevronRightIcon
-                    className={
-                      open
-                        ? "-rotate-90 transform w-5 h-5"
-                        : "rotate-90 transform w-5 h-5"
-                    }
-                  />
-                </Disclosure.Button>
-                <Disclosure.Panel className="text-gray-500 w-full">
-                  <ul className="max-h-52 overflow-y-auto w-full">
-                    {news?.map((article) => (
-                      <NewItem key={article.title._text} newItem={article} />
-                    ))}
-                  </ul>
-                </Disclosure.Panel>
-              </>
-            );
-          }}
-        </Disclosure>
-      </div>
-      <hr className="border-gray-300 w-full -mt-2" />
+              <div className="flex flex-col justify-start w-full">
+                <Disclosure>
+                  {({ open }) => {
+                    return (
+                      <>
+                        <Disclosure.Button className="py-2 text-left w-full flex gap-2 items-center text-gray-600">
+                          Noticias relacionadas
+                          <ChevronRightIcon
+                            className={
+                              open
+                                ? "-rotate-90 transform w-5 h-5"
+                                : "rotate-90 transform w-5 h-5"
+                            }
+                          />
+                        </Disclosure.Button>
+                        <Disclosure.Panel className="text-gray-500 w-full">
+                          <ul className="max-h-52 overflow-y-auto w-full">
+                            {news?.map((article) => (
+                              <NewItem
+                                key={article.title._text}
+                                newItem={article}
+                              />
+                            ))}
+                          </ul>
+                        </Disclosure.Panel>
+                      </>
+                    );
+                  }}
+                </Disclosure>
+              </div>
+            </>
+          )}
+          <hr className="border-gray-300 w-full -mt-2" />
+          {!thermalAnomaliesLoading && (
+            <>
+              {!thermalAnomalies?.length ? (
+                <p className="text-red-400 text-center">
+                  No detectamos anomalías térmicas en el área, estas seguro que
+                  deseas reportar?
+                </p>
+              ) : null}
+              {thermalAnomalies?.length ? (
+                <p className="text-center">
+                  Hay al menos {thermalAnomalies?.length} anomalías térmicas en
+                  el área
+                </p>
+              ) : null}
+
+              <div className="w-full gap-4 flex">
+                {authUser ? (
+                  <>
+                    <button
+                      className="bg-red-400 w-full text-white rounded-md py-2 px-4 mt-2"
+                      onClick={() => {
+                        setData(null);
+                      }}
+                    >
+                      Cancelar
+                    </button>
+                    <button
+                      className="bg-blue-400 w-full text-white rounded-md py-2 px-4 mt-2"
+                      onClick={handlePostEvent}
+                      disabled={isPostingEventLoading}
+                    >
+                      {isPostingEventLoading ? "Reportando..." : "Reportar"}
+                    </button>
+                  </>
+                ) : (
+                  <button
+                    className="bg-blue-400 w-full text-white rounded-md py-2 px-4 mt-2"
+                    onClick={() => {
+                      login();
+                    }}
+                  >
+                    Iniciar sesion para reportar
+                  </button>
+                )}
+              </div>
+            </>
+          )}
+        </>
+      )}
     </ModalTemplate>
   );
 };
