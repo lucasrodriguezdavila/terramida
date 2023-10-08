@@ -27,7 +27,7 @@ export default function landingPage() {
         style={{ backgroundImage: "url('./fondo1.png')" }}
       >
         <div
-          className="text-center flex flex-col items-center	 h-screen gap-6 p-40"
+          className="text-center flex flex-col items-center	 h-screen gap-6 md:p-40"
           style={{ backdropFilter: " blur(3px)" }}
         >
           <h1 className=" text-3xl font-extrabold tracking-[-0.04em] text-black sm:text-5xl sm:leading-[3.5rem]">
@@ -56,7 +56,7 @@ export default function landingPage() {
               <img className="w-[60%]" src={item.urlImg} alt="img" />
               <p className="mt-2 text-sm leading-6 text-slate-200">
                 {item.subtitle}
-              </p>
+              </p>  
             </article>
           );
 >>>>>>> 465cf19b8218272a79fe4477c62d97be3c6dc2d6
