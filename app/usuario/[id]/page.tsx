@@ -3,6 +3,7 @@ import DescriptionUser from "@/components/DescriptionUser/page";
 import SocialNetworks from "@/components/SocialNetworks/page";
 import UserProfil from "@/components/UserProfil/page";
 import { getUserById } from "@/utils/users";
+import Activity from "./Activity";
 
 export default async function Home({ params }: { params: { id: string } }) {
   const user = await getUserById(params.id);
@@ -32,17 +33,9 @@ export default async function Home({ params }: { params: { id: string } }) {
 
           <article className="col-span-4 sm:col-span-9">
             <div className="bg-white shadow rounded-lg p-6">
-              <h2 className="text-xl font-bold  mb-4">
-              Activity History
-              </h2>
+              <h2 className="text-xl font-bold  mb-4">Activity History</h2>
               <hr className="my-6 border-t border-gray-300" />
-              {/* {user?.comments?.map((commentId: string) => {
-                return (
-                  <div key={commentId}>
-                    <Comment id={commentId} />
-                  </div>
-                );
-              })} */}
+              <Activity />
             </div>
           </article>
         </div>
