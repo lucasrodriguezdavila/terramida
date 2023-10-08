@@ -1,12 +1,4 @@
-import {
-  Auth,
-  GoogleAuthProvider,
-  UserCredential,
-  fetchSignInMethodsForEmail,
-  signInWithCustomToken,
-  signInWithEmailAndPassword,
-  signInWithPopup,
-} from "firebase/auth";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "@/app/firebase";
 import {
   UseQueryResult,
@@ -18,15 +10,31 @@ import React from "react";
 
 const provider = new GoogleAuthProvider();
 
-export const signWithGoogle = () => {
-  return signInWithPopup(auth, provider);
+const createUserInDB = async (token: string) => {
+  const res = await fetch("/api/user/create", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  const data = await res.json();
+  return data;
+};
+
+export const signWithGoogle = async () => {
+  const data = await signInWithPopup(auth, provider);
+  const token = await data.user?.getIdToken();
+
+  await createUserInDB(token);
+
+  return data;
 };
 
 export const useSignInWithGoogle = () => {
   const queryclient = useQueryClient();
   return useMutation(["signWithGoogle"], {
     mutationFn: signWithGoogle,
-    onSuccess: (data) => {
+    onSuccess: async (data) => {
       queryclient.invalidateQueries(["user"]);
     },
   });
