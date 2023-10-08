@@ -1,7 +1,7 @@
 //https://news.google.com/rss/search?q=incendios+cordoba
 import convert from "xml-js";
 
-export const getNewsByQuery = async (query: string) => {
+const getNewsByQuery = async (query: string) => {
   const response = await fetch(
     `https://news.google.com/rss/search?q=${query}`,
     {
