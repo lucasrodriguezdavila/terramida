@@ -26,23 +26,7 @@ interface EventComment {
   id: string;
   eventId: string;
   comment: string;
-  user: {
-    id: string;
-    firstName: string;
-    lastName: string;
-    description: string;
-    imageProfile: string;
-    username: string;
-    organization?: {
-      id: string;
-      government: boolean;
-      name: string;
-      description: string;
-      image: string;
-      lat: number;
-      lng: number;
-    };
-  };
+  user: UserData;
   createdAt: string;
   updatedAt: string;
 
