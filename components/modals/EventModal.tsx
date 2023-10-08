@@ -227,7 +227,7 @@ const EventModal = () => {
             <>
               {!thermalAnomalies?.length && !eventsInArea?.length ? (
                 <p className="text-red-400 text-center">
-                  We didn`&apos;`t find any thermic anomalies
+                  We didn&apos;t find any thermic anomalies
                 </p>
               ) : null}
               {thermalAnomalies?.length ? (
@@ -269,14 +269,14 @@ const EventModal = () => {
                           setData(null);
                         }}
                       >
-                        Cancelar
+                        Cancel
                       </button>
                       <button
                         className="bg-blue-400 w-full text-white rounded-md py-2 px-4 mt-2"
                         onClick={handlePostEvent}
                         disabled={isPostingEventLoading}
                       >
-                        {isPostingEventLoading ? "Reportando..." : "Reportar"}
+                        {isPostingEventLoading ? "Reporting..." : "Report"}
                       </button>
                     </>
                   ) : (
