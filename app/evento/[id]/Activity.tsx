@@ -4,6 +4,7 @@ import { useParams } from "next/navigation";
 import React, { useRef, useCallback } from "react";
 
 import dayjs from "dayjs";
+import Link from "next/link";
 
 interface Props {}
 
@@ -41,21 +42,42 @@ const Activity: React.FC<Props> = ({}) => {
           return (
             <div
               key={comment.id}
-              className=" rounded-lg bg-gray-100 py-2 px-3 text-sm border border-gray-200 shadow-sm flex items-start gap-2"
+              className={`rounded-lg py-2 px-3 text-sm border flex flex-col shadow-sm  gap-2 ${
+                comment?.user?.organization
+                  ? "text-green-500 bg-green-500/30 border-green-500"
+                  : "bg-gray-100 border-gray-200 text-gray-600"
+              }`}
             >
-              <img
-                src={comment.user.imageProfile}
-                className="w-5 h-5 rounded-full"
-              />
-              <div className="flex flex-col gap-1 mr-auto">
-                <span className="text-gray-600 font-semibold">
-                  {comment.user.username}
+              <div className="flex items-start gap-2">
+                <img
+                  src={comment.user.imageProfile}
+                  className="w-5 h-5 rounded-full"
+                />
+                <div className="flex flex-col gap-1 mr-auto">
+                  <span className=" font-semibold">
+                    {comment.user.username}
+                  </span>
+                  <p className="">{comment.comment}</p>
+                </div>
+                <span className="">
+                  {dayjs(comment.createdAt).format("DD-MM-YYYY")}
                 </span>
-                <p className="">{comment.comment}</p>
               </div>
-              <span className="text-gray-600">
-                {dayjs(comment.createdAt).format("DD-MM-YYYY")}
-              </span>
+              {comment?.user?.organization && (
+                <>
+                  <hr className="border-green-500" />
+
+                  <p>
+                    Pertenece a{" "}
+                    <Link
+                      href={"/organizacion/" + comment.user.organization.id}
+                      className="cursor-pointer underline"
+                    >
+                      {comment.user.organization.name}
+                    </Link>
+                  </p>
+                </>
+              )}
             </div>
           );
         })}

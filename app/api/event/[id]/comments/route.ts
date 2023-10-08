@@ -46,10 +46,10 @@ export async function GET(
         }
       }
 
-      if (comment.validator) {
+      if (comment?.user?.organization) {
         const validatorOrganizationRef = db
           .collection("organizations")
-          .doc(comment.validator);
+          .doc(comment?.user?.organization);
         const validatorOrganizationSnap = await validatorOrganizationRef.get();
 
         if (validatorOrganizationSnap.exists) {
@@ -59,7 +59,7 @@ export async function GET(
             id: validatorOrganizationSnap.id,
             ...validatorOrganizationData,
           };
-          comment.validator = validatorOrganization;
+          comment.user.organization = validatorOrganization;
         }
       }
       return comment;
