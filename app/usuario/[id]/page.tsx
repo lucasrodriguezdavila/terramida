@@ -5,7 +5,6 @@ import UserProfil from "@/components/UserProfil/page";
 import { getUserById } from "@/utils/users";
 
 export default async function Home({ params }: { params: { id: string } }) {
-  // id = 'ZeVLre1JjhWw8wIb4xqG'
   const user = await getUserById(params.id);
 
   return (
@@ -15,17 +14,19 @@ export default async function Home({ params }: { params: { id: string } }) {
           <article className="col-span-4 sm:col-span-3">
             <div className="bg-white shadow rounded-lg p-6">
               <UserProfil
-                userName={user?.userName}
+                userName={user?.username}
                 imgUrl={user?.imageProfile}
-                subtitle={`${user?.firsName} ${user?.lastName}`}
+                subtitle={`${user?.firstName} ${user?.lastName}`}
               />
               <hr className="my-6 border-t border-gray-300" />
               <DescriptionUser
                 title="Informacion general"
-                description={user?.description}
+                description={user?.description || ""}
               />
               <hr className="my-6 border-t border-gray-300" />
-              <SocialNetworks listSocialNetworks={user?.socialNetworks} />
+              {user?.socialNetworks ? (
+                <SocialNetworks listSocialNetworks={user?.socialNetworks} />
+              ) : null}
             </div>
           </article>
 
@@ -35,13 +36,13 @@ export default async function Home({ params }: { params: { id: string } }) {
                 Historial de Actividad
               </h2>
               <hr className="my-6 border-t border-gray-300" />
-              {user?.comments?.map((commentId: string) => {
+              {/* {user?.comments?.map((commentId: string) => {
                 return (
                   <div key={commentId}>
                     <Comment id={commentId} />
                   </div>
                 );
-              })}
+              })} */}
             </div>
           </article>
         </div>

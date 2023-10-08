@@ -1,6 +1,8 @@
+import Loading from "@/components/Loading";
 import { Metadata } from "next";
 import dynamic from "next/dynamic";
 import { notFound } from "next/navigation";
+import { FadeLoader } from "react-spinners";
 
 export async function generateMetadata({
   params,
@@ -17,7 +19,7 @@ export async function generateMetadata({
 }
 
 const Map = dynamic(() => import("./Map"), {
-  loading: () => <p>loading...</p>,
+  loading: () => <Loading />,
   ssr: false,
 });
 

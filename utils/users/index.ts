@@ -4,7 +4,7 @@ export const getUserById = async (id: string | undefined) => {
   if (!id) {
     return null;
   }
-  const userRef = db.collection("users").doc(id)
+  const userRef = db.collection("users").doc(id);
 
   const user = await userRef.get();
 
@@ -12,5 +12,5 @@ export const getUserById = async (id: string | undefined) => {
     return null;
   }
 
-  return user.data();
+  return user.data() as UserData;
 };

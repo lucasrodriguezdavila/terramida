@@ -1,6 +1,14 @@
-import React from 'react'
+import React from "react";
 
-export default function UserProfil({ userName, imgUrl, subtitle}:{ userName:string, imgUrl:string, subtitle:string}) {
+export default function UserProfil({
+  userName,
+  imgUrl,
+  subtitle,
+}: {
+  userName: string | undefined;
+  imgUrl: string | undefined;
+  subtitle: string | undefined;
+}) {
   return (
     <div className="flex flex-col items-center">
       <img
@@ -9,7 +17,6 @@ export default function UserProfil({ userName, imgUrl, subtitle}:{ userName:stri
       />
       <h1 className="text-xl font-bold">{userName}</h1>
       <p className="text-gray-600">{subtitle}</p>
-
     </div>
-  )
+  );
 }

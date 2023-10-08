@@ -2,6 +2,7 @@ import { getOrganizationById } from "@/utils/organizations";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import dynamic from "next/dynamic";
+import Loading from "@/components/Loading";
 
 export async function generateMetadata({
   params,
@@ -17,7 +18,7 @@ export async function generateMetadata({
   }
 }
 const MapDefault = dynamic(() => import("./Map"), {
-  loading: () => <p>loading...</p>,
+  loading: () => <Loading />,
   ssr: false,
 });
 
