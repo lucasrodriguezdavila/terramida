@@ -34,11 +34,11 @@ export default function landingPage() {
       </header>
       <main>
         {items.map(item => {
-          return <article className=' flex flex-col	justify-center alin-items-center gap-6 w-full min-h-screen flex flex-col justify-center items-center bg-blue-400 py-12 px-20 text-center'>
-                  <img src={item.urlImg} alt='img' />
-            <h2 className='text-lg font-semibold leading-6 text-slate-900'>{item.title}</h2>
-            <p className='mt-2 text-sm leading-6 text-slate-700'>{item.subtitle}</p>
-          </article>
+          return <article className=' flex flex-col	justify-center alin-items-center gap-6 w-full min-h-screen flex flex-col justify-center items-center bg-blue-900 py-12 px-20 text-center'> 
+                  <h2 className='text-[20pt] font-semibold leading-6 text-slate-100 '>{item.title}</h2>
+                  <img className='w-[60%]' src={item.urlImg} alt='img' />
+                  <p className='mt-2 text-sm leading-6 text-slate-200'>{item.subtitle}</p>
+                </article>
         })}
       </main>
       <footer className="w-full p-5 flex flex-col justify-center items-center bg-gray-800">
