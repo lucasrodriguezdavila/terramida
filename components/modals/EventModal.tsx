@@ -59,7 +59,7 @@ const NewItem: React.FC<NewItemProps> = ({ newItem }) => {
       return dayjs().diff(_date, "day") + "d";
     }
     if (dayjs().diff(_date, "year") < 1) {
-      return dayjs().diff(_date, "month") + " meses";
+      return dayjs().diff(_date, "month") + " month";
     }
     return _date.format("dddd DD, MMM");
   }, [newItem.pubDate._text]);
@@ -164,7 +164,7 @@ const EventModal = () => {
       {isSuccess ? (
         <>
           <p className="text-center text-2xl text-gray-600 my-6">
-            Evento reportado con exito!
+            Event reported successfully!
           </p>
           <div className="w-full gap-4 flex">
             {postedEventData?.id ? (
@@ -172,14 +172,14 @@ const EventModal = () => {
                 className="bg-blue-400 w-full text-white rounded-md py-2 px-4 mt-2"
                 onClick={handleNavigateToEvent}
               >
-                Ver evento
+                View event
               </button>
             ) : (
               <button
                 className="bg-blue-400 w-full text-white rounded-md py-2 px-4 mt-2"
                 onClick={handleNavigateToEvent}
               >
-                Cerrar
+                Close
               </button>
             )}
           </div>
@@ -196,7 +196,7 @@ const EventModal = () => {
                     return (
                       <>
                         <Disclosure.Button className="py-2 text-left w-full flex gap-2 items-center text-gray-600">
-                          Noticias relacionadas
+                          Related news
                           <ChevronRightIcon
                             className={
                               open
@@ -227,13 +227,13 @@ const EventModal = () => {
             <>
               {!thermalAnomalies?.length && !eventsInArea?.length ? (
                 <p className="text-red-400 text-center">
-                  No detectamos anomalías térmicas en el área.
+                  We didn`&apos;`t find any thermic anomalies
                 </p>
               ) : null}
               {thermalAnomalies?.length ? (
                 <p className="text-center">
-                  Hay al menos {thermalAnomalies?.length} anomalías térmicas en
-                  el área
+                  There is at least {thermalAnomalies?.length} thermic anomalies
+                  in the area
                 </p>
               ) : null}
 
@@ -247,7 +247,7 @@ const EventModal = () => {
                         key={event.id}
                         className="bg-blue-400 w-full text-white rounded-md py-2 px-4 mt-2"
                       >
-                        Ver evento a{" "}
+                        View event at{" "}
                         {_getDistanceFromLatLonInKm(
                           data?.lat,
                           data?.lng,
@@ -286,7 +286,7 @@ const EventModal = () => {
                         login();
                       }}
                     >
-                      Iniciar sesion para reportar
+                      Login to report
                     </button>
                   )}
                 </div>

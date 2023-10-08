@@ -36,7 +36,7 @@ const Activity: React.FC<Props> = ({}) => {
   return (
     <div className="relative col-span-12 md:col-span-8 ">
       <div className="bg-white shadow rounded-lg p-6 gap-4 flex flex-col">
-        <h2 className="text-xl font-bold text-gray-500 mb-4">Actividad</h2>
+        <h2 className="text-xl font-bold text-gray-500 mb-4">Activity</h2>
 
         {comments?.map((comment) => {
           return (
@@ -68,7 +68,7 @@ const Activity: React.FC<Props> = ({}) => {
                   <hr className="border-green-500" />
 
                   <div className="flex items-center gap-1">
-                    Pertenece a{" "}
+                    It`s a member of{" "}
                     <Link
                       href={"/organizacion/" + comment.user.organization.id}
                       className="cursor-pointer underline"
@@ -193,7 +193,7 @@ const Activity: React.FC<Props> = ({}) => {
         onClick={handleOnClickComment}
         onSubmit={handleOnSubmitComment}
       >
-        <p className="text-xl font-bold text-gray-500 ">Comentar</p>
+        <p className="text-xl font-bold text-gray-500 ">Comment</p>
         <textarea
           ref={commentRef}
           id="comment"
@@ -207,7 +207,7 @@ const Activity: React.FC<Props> = ({}) => {
             type="submit"
             disabled={isLoading}
           >
-            {isLoading ? "Enviando..." : "Enviar"}
+            {isLoading ? "Submitting..." : "Submit"}
           </button>
         </div>
       </form>

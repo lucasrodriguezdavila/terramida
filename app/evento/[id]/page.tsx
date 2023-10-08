@@ -14,7 +14,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   try {
     return {
-      title: `Evento | Terramida`,
+      title: `Hotspot | Terramida`,
     };
   } catch (error) {
     notFound();
