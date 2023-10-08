@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { Address } from "./Address";
 import Activity from "./Activity";
 import dynamic from "next/dynamic";
+import Loading from "@/components/Loading";
 
 export async function generateMetadata({
   params,
@@ -21,7 +22,7 @@ export async function generateMetadata({
 }
 
 const Map = dynamic(() => import("./Map"), {
-  loading: () => <p>loading...</p>,
+  loading: () => <Loading />,
   ssr: false,
 });
 
