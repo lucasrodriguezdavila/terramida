@@ -50,7 +50,7 @@ export const useThermalAnomalies = () => {
 };
 
 const postEvent = async (data: ThermalAnomalyPost, token: string) => {
-  const res = await fetch(`${BASE_URL_TEST}/createEventDTO`, {
+  const res = await fetch(`${BASE_URL}/createEventDTO`, {
     method: "POST",
     headers: {
       Authorization: "Bearer " + token,
