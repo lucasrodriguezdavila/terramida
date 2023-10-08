@@ -6,4 +6,9 @@ interface Organization {
   name: string;
   description: string;
   image: string;
+  interestArea?: {
+    latitude: number;
+    longitude: number;
+    radius: number;
+  };
 }

@@ -46,10 +46,10 @@ export async function GET(
         }
       }
 
-      if (comment?.user?.organization) {
+      if (comment?.user?.organizationUID) {
         const validatorOrganizationRef = db
           .collection("organizations")
-          .doc(comment?.user?.organization);
+          .doc(comment?.user?.organizationUID);
         const validatorOrganizationSnap = await validatorOrganizationRef.get();
 
         if (validatorOrganizationSnap.exists) {

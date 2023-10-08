@@ -1,6 +1,7 @@
 import { getOrganizationById } from "@/utils/organizations";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
+import MapDefault from "./Map";
 
 export async function generateMetadata({
   params,
@@ -30,9 +31,12 @@ export default async function Organizacion({
   }
 
   return (
-    <div className="bg-gray-100 text-gray-400 w-full">
+    <div className=" w-full">
       <div className="container mx-auto py-8">
         <div className="grid  grid-cols-12 gap-6 px-4">
+          <div className="col-span-12 h-56">
+            <MapDefault />
+          </div>
           <div className="col-span-12 md:col-span-4 ">
             <div className="bg-white shadow rounded-lg p-6">
               <div className="flex flex-col items-center">

@@ -163,3 +163,21 @@ export const usePostUserData = (uid: string) => {
     }
   );
 };
+
+export const getUserOrganization = async (uid: string | undefined) => {
+  if (!uid) throw new Error("No uid provided");
+
+  const res = await fetch(`/api/user/${uid}/organization`);
+  const data = await res.json();
+  return data as Organization;
+};
+
+export const useUserOrganization = (uid: string | undefined) => {
+  return useQuery<Organization, Error>(
+    ["userOrganization", uid],
+    () => getUserOrganization(uid),
+    {
+      refetchOnWindowFocus: false,
+    }
+  );
+};
