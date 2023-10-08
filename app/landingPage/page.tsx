@@ -34,7 +34,7 @@ export default function landingPage() {
       </header>
       <main>
         {items.map(item => {
-          return <article className=' flex flex-col	justify-center alin-items-center gap-6 w-full min-h-screen flex flex-col justify-center items-center  bg-gradient-to-r from-blue-900 via-purple-900 to-pink-900 py-12 px-20 text-center'>
+          return <article className=' flex flex-col	justify-center alin-items-center gap-6 w-full min-h-screen flex flex-col justify-center items-center  bg-gradient-to-r from-blue-900 via-purple-900 to-pink-900 py-12 sm:px-10 md:px-40 lg:px-70 text-center'>
             <h2 className='text-[20pt] font-semibold leading-6 text-slate-100 '>{item.title}</h2>
             <img className='w-[40%]' src={item.urlImg} alt='img' />
             <p className='mt-2 text-sm leading-6 text-slate-200'>{item.subtitle}</p>
