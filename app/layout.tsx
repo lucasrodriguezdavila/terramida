@@ -2,6 +2,7 @@ import Modals from "@/components/modals";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import Provider from "@/utils/Provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,8 +21,10 @@ export default function RootLayout({
       <body
         className={`flex-1 flex bg-gray-100 text-gray-400 ${inter.className}`}
       >
-        {children}
-        <Modals />
+        <Provider>
+          {children}
+          <Modals />
+        </Provider>
       </body>
     </html>
   );

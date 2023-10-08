@@ -1,5 +1,6 @@
 "use client";
 
+import { useQuery } from "@tanstack/react-query";
 import {
   setKey,
   setDefaults,
@@ -80,14 +81,57 @@ export const getGeocode = async (address: string) => {
   }
 };
 
-export const getReverseGeocode = async (lat: number, lng: number) => {
+export const getReverseGeocode = async (
+  lat: number | undefined,
+  lng: number | undefined
+) => {
   try {
-    console.log({
-      key: process.env.NEXT_FIREBASE_PRIVATE_KEY_ID, // This key works for this project only.
-    });
+    if (!lat || !lng) return;
+
     const response = await fromLatLng(lat, lng);
+
     return response as CoordinatedGeocoded;
   } catch (error) {
     console.error(error);
   }
+};
+
+export const getAdressFromLatLng = async (
+  lat: number | undefined,
+  lng: number | undefined
+) => {
+  try {
+    if (!lat || !lng) throw new Error("No address found");
+
+    const geocode = await getReverseGeocode(lat, lng);
+    // get address by splitting addres in the first space
+    const results = geocode?.plus_code.compound_code.split(" ");
+    const address = results?.slice(1).join(" ");
+
+    if (!address) throw new Error("No address found");
+
+    return address;
+  } catch (error) {
+    throw new Error("No address found");
+  }
+};
+
+export const useReverseGeocode = (
+  lat: number | undefined,
+  lng: number | undefined
+) => {
+  return useQuery(["reverse-geocode", lat, lng], {
+    queryFn: () => getReverseGeocode(lat, lng),
+    enabled: !!lat && !!lng,
+  });
+};
+
+export const useAddressFromLatLng = (
+  lat: number | undefined,
+  lng: number | undefined
+) => {
+  return useQuery(["address-from-lat-lng", lat, lng], {
+    queryFn: () => getAdressFromLatLng(lat, lng),
+    enabled: !!lat && !!lng,
+  });
 };
