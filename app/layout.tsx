@@ -43,7 +43,7 @@ const PrivateController = ({ children }: { children: React.ReactNode }) => {
             passHref
             className="py-2 font-bold text-gray-500 cursor-pointer"
           >
-            Mapa
+            Map
           </Link>
 
           {authUser ? (
@@ -52,7 +52,7 @@ const PrivateController = ({ children }: { children: React.ReactNode }) => {
               passHref
               className="py-2 font-bold text-gray-500 cursor-pointer"
             >
-              Mi Perfil
+              My Profile
             </Link>
           ) : null}
 
@@ -62,7 +62,7 @@ const PrivateController = ({ children }: { children: React.ReactNode }) => {
               passHref
               className="py-2 font-bold text-gray-500 cursor-pointer"
             >
-              Mi organizacion
+              My organization
             </Link>
           ) : null}
 
@@ -71,14 +71,14 @@ const PrivateController = ({ children }: { children: React.ReactNode }) => {
               className="py-2 font-bold text-gray-500 cursor-pointer"
               onClick={handleLogout}
             >
-              Cerrar sesion
+              Log out
             </div>
           ) : (
             <div
               className="py-2 font-bold text-gray-500 cursor-pointer"
               onClick={() => login()}
             >
-              Iniciar sesion
+              Log in
             </div>
           )}
         </nav>
@@ -97,7 +97,7 @@ const PrivateController = ({ children }: { children: React.ReactNode }) => {
             <Menu.Item>
               {({ active }) => (
                 <Link href="/mapa" passHref>
-                  <li className=" font-bold  cursor-pointer">Mapa</li>
+                  <li className=" font-bold  cursor-pointer">Map</li>
                 </Link>
               )}
             </Menu.Item>
@@ -110,7 +110,7 @@ const PrivateController = ({ children }: { children: React.ReactNode }) => {
                     passHref
                     className=" font-bold  cursor-pointer"
                   >
-                    Mi Perfil
+                    My Profile
                   </Link>
                 )}
               </Menu.Item>
@@ -121,7 +121,7 @@ const PrivateController = ({ children }: { children: React.ReactNode }) => {
                     className=" font-bold  cursor-pointer"
                     onClick={() => login()}
                   >
-                    Iniciar sesion
+                    Log in
                   </li>
                 )}
               </Menu.Item>
@@ -135,7 +135,7 @@ const PrivateController = ({ children }: { children: React.ReactNode }) => {
                     passHref
                     className=" font-bold  cursor-pointer"
                   >
-                    Mi organizacion
+                    My organization
                   </Link>
                 )}
               </Menu.Item>

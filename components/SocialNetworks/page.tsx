@@ -30,7 +30,7 @@ export default function SocialNetworks({
 
   return (
     <>
-      <h3 className="font-semibold text-center mt-3 -mb-2">Encuéntrame en</h3>
+      <h3 className="font-semibold text-center mt-3 -mb-2">Find me at</h3>
       <div className="flex justify-center items-center gap-6 my-6">
         {listSocialNetworks?.map((item: { type: string; url: string }) => {
           return (

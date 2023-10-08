@@ -20,7 +20,7 @@ export default async function Home({ params }: { params: { id: string } }) {
               />
               <hr className="my-6 border-t border-gray-300" />
               <DescriptionUser
-                title="Informacion general"
+                title="General info"
                 description={user?.description || ""}
               />
               <hr className="my-6 border-t border-gray-300" />
@@ -33,7 +33,7 @@ export default async function Home({ params }: { params: { id: string } }) {
           <article className="col-span-4 sm:col-span-9">
             <div className="bg-white shadow rounded-lg p-6">
               <h2 className="text-xl font-bold  mb-4">
-                Historial de Actividad
+              Activity History
               </h2>
               <hr className="my-6 border-t border-gray-300" />
               {/* {user?.comments?.map((commentId: string) => {
