@@ -41,19 +41,21 @@ const Activity: React.FC<Props> = ({}) => {
           return (
             <div
               key={comment.id}
-              className=" rounded-lg bg-gray-100 py-2 px-3 text-sm border border-gray-200 shadow-sm"
+              className=" rounded-lg bg-gray-100 py-2 px-3 text-sm border border-gray-200 shadow-sm flex items-start gap-2"
             >
-              <div className="flex justify-between">
+              <img
+                src={comment.user.imageProfile}
+                className="w-5 h-5 rounded-full"
+              />
+              <div className="flex flex-col gap-1 mr-auto">
                 <span className="text-gray-600 font-semibold">
-                  {comment.user}
+                  {comment.user.username}
                 </span>
-                <p>
-                  <span className="text-gray-600">
-                    {dayjs(comment.createdAt).format("DD-MM-YYYY")}
-                  </span>
-                </p>
+                <p className="">{comment.comment}</p>
               </div>
-              <p className="mt-2">{comment.comment}</p>
+              <span className="text-gray-600">
+                {dayjs(comment.createdAt).format("DD-MM-YYYY")}
+              </span>
             </div>
           );
         })}
