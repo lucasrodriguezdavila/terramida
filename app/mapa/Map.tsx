@@ -52,7 +52,7 @@ const Map = () => {
 
     L.tileLayer
       .wms(
-        "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?TIME=2023-10-07T00:00:00Z",
+        "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?TIME=2023-10-08T00:00:00Z",
         {
           layers: "VIIRS_NOAA20_Thermal_Anomalies_375m_Night",
           format: "image/png",
@@ -64,7 +64,7 @@ const Map = () => {
 
     L.tileLayer
       .wms(
-        "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?TIME=2023-10-07T00:00:00Z",
+        "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?TIME=2023-10-08T00:00:00Z",
         {
           layers: "VIIRS_NOAA20_Thermal_Anomalies_375m_Day",
           format: "image/png",
