@@ -4,7 +4,7 @@ import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyC9lEkDIdufRmq0CQo7uqN1GzGI9olb6Nc",
+  apiKey: "AIzaSyBgTHqxBnsaUXpwiuy05TWubYPWel-kCI4",
   authDomain: "terramida.firebaseapp.com",
   projectId: "terramida",
   storageBucket: "terramida.appspot.com",
