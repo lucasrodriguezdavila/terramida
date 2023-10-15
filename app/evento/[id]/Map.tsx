@@ -22,6 +22,10 @@ const Map: React.FC<Props> = ({ lat, lng }) => {
     map.setZoom(12);
     map.setView([lat, lng]);
 
+    const yesterdayParsed = new Date();
+    yesterdayParsed.setDate(yesterdayParsed.getDate() - 1);
+    const yesterday = yesterdayParsed.toISOString().split("T")[0];
+
     L.tileLayer
       .wms("https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?", {
         layers: "VIIRS_NOAA20_Thermal_Anomalies_375m_Night",
@@ -42,7 +46,7 @@ const Map: React.FC<Props> = ({ lat, lng }) => {
 
     L.tileLayer
       .wms(
-        "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?TIME=2023-10-07T00:00:00Z",
+        `https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?TIME=${yesterday}T00:00:00Z`,
         {
           layers: "VIIRS_NOAA20_Thermal_Anomalies_375m_Night",
           format: "image/png",
@@ -54,7 +58,7 @@ const Map: React.FC<Props> = ({ lat, lng }) => {
 
     L.tileLayer
       .wms(
-        "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?TIME=2023-10-07T00:00:00Z",
+        `https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?TIME=${yesterday}T00:00:00Z`,
         {
           layers: "VIIRS_NOAA20_Thermal_Anomalies_375m_Day",
           format: "image/png",

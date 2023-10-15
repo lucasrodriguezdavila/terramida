@@ -32,6 +32,10 @@ const Map = () => {
     map.setZoom(12);
     map.setView([-31.421631960419607, -64.18899536132814]);
 
+    const yesterdayParsed = new Date();
+    yesterdayParsed.setDate(yesterdayParsed.getDate() - 1);
+    const yesterday = yesterdayParsed.toISOString().split("T")[0];
+
     L.tileLayer
       .wms("https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?", {
         layers: "VIIRS_NOAA20_Thermal_Anomalies_375m_Night",
@@ -52,7 +56,7 @@ const Map = () => {
 
     L.tileLayer
       .wms(
-        "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?TIME=2023-10-08T00:00:00Z",
+        `https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?TIME=${yesterday}T00:00:00Z`,
         {
           layers: "VIIRS_NOAA20_Thermal_Anomalies_375m_Night",
           format: "image/png",
@@ -64,7 +68,7 @@ const Map = () => {
 
     L.tileLayer
       .wms(
-        "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?TIME=2023-10-08T00:00:00Z",
+        `https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?TIME=${yesterday}T00:00:00Z`,
         {
           layers: "VIIRS_NOAA20_Thermal_Anomalies_375m_Day",
           format: "image/png",
