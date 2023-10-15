@@ -16,7 +16,7 @@ import {
 } from "react-geocode";
 
 setDefaults({
-  key: "AIzaSyC9lEkDIdufRmq0CQo7uqN1GzGI9olb6Nc", // This key works for this project only.
+  key: "AIzaSyB_dajJ-70uipXs-hvWEs0tYBUurxqIVm4", // This key works for this project only.
   language: "es", // Default language for responses.
   region: "es", // Default region for responses.
   outputFormat: OutputFormat.JSON,
