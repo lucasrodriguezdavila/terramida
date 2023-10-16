@@ -1,5 +1,4 @@
 import { getEventById } from "@/utils/events";
-import { getAdressFromLatLng, getReverseGeocode } from "@/utils/geocode";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Address } from "./Address";
