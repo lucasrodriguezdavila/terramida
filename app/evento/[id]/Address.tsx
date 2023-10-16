@@ -9,5 +9,5 @@ interface Props {
 
 export const Address: React.FC<Props> = ({ lat, lng }) => {
   const { data: address } = useAddressFromLatLng(lat, lng);
-  return <h1 className="text-xl font-bold">{address}</h1>;
+  return <h1 className="text-xl font-bold">{address?.address}</h1>;
 };

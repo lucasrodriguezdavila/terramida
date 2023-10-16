@@ -4,6 +4,20 @@ import { useQuery } from "@tanstack/react-query";
 
 const API_KEY = process.env.NEXT_PUBLIC_GOOGLE_GEOCODER as string;
 
+const getFormattedCityAddress = (address: google.maps.GeocoderResult) => {
+  // get "country", "administrative_area_level_1", "locality" joined
+  const cityAddress = address.address_components
+    .filter((component) =>
+      ["country", "administrative_area_level_1", "locality"].includes(
+        component.types[0]
+      )
+    )
+    .map((component) => component.long_name)
+    .join(", ");
+
+  return cityAddress;
+};
+
 export const getAdressFromLatLng = async (
   lat: number | undefined,
   lng: number | undefined
@@ -28,7 +42,9 @@ export const getAdressFromLatLng = async (
   if (geocode?.length === 0) throw new Error("No address found");
 
   const address = geocode[0].formatted_address;
-  return address;
+  const locality = getFormattedCityAddress(geocode[0]);
+
+  return { address, locality };
 };
 
 export const useAddressFromLatLng = (
