@@ -9,5 +9,5 @@ interface Props {
 
 export const Address: React.FC<Props> = ({ lat, lng }) => {
   const { data: address } = useAddressFromLatLng(lat, lng);
-  return <>{address}</>;
+  return <>{address?.address}</>;
 };

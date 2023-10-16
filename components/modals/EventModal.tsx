@@ -2,7 +2,7 @@
 import { useModal } from "@/stores/modals";
 import React, { Fragment, useCallback, useEffect, useMemo } from "react";
 import ModalTemplate from "./ModalTemplate";
-import { useAddressFromLatLng, useReverseGeocode } from "@/utils/geocode";
+import { useAddressFromLatLng } from "@/utils/geocode";
 import { New, useNews } from "@/utils/news";
 import Link from "next/link";
 import { Disclosure } from "@headlessui/react";
@@ -102,7 +102,7 @@ const EventModal = () => {
     reset: resetPostEvent,
   } = usePostEvent();
 
-  const { data: news } = useNews(addresGeocoded);
+  const { data: news } = useNews(addresGeocoded?.locality);
 
   const {
     mutate: postThermalEvent,
@@ -156,7 +156,7 @@ const EventModal = () => {
   return (
     <ModalTemplate closeModal={handleCloseModal} isOpen={!!data}>
       <h1 className="font-extrabold text-2xl text-gray-600 self-start items-center gap-1">
-        {addresGeocoded}
+        {addresGeocoded?.address}
         <p className="text-xs text-gray-400 font-normal mt-1">
           {data?.lat} - {data?.lng}
         </p>

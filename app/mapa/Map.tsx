@@ -6,8 +6,6 @@ import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility
 import "leaflet-defaulticon-compatibility";
 import { MapContainer, TileLayer, Marker, useMap } from "react-leaflet";
 import L from "leaflet";
-import { getReverseGeocode } from "@/utils/geocode/index";
-import { getNewsByQuery } from "@/utils/news";
 import { useModal } from "@/stores/modals";
 
 const Map = () => {
