@@ -2,7 +2,7 @@
 import { useModal } from "@/stores/modals";
 import React, { Fragment, useCallback, useEffect, useMemo } from "react";
 import ModalTemplate from "./ModalTemplate";
-import { useAddressFromLatLng, useReverseGeocode } from "@/utils/geocode";
+import { useAddressFromLatLng } from "@/utils/geocode";
 import { New, useNews } from "@/utils/news";
 import Link from "next/link";
 import { Disclosure } from "@headlessui/react";
